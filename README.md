@@ -25,8 +25,53 @@ You can tweak its gameplay with 50+ controls on engine playstyle, making it very
 **"Manage Chess Engines"** > **"Set Options"**
 
 ---
+
 ### ALTERNATIVELY, YOU CAN USE THIS ENGINE ON [Yuuki App on Base44.com](https://yuuki-ch.base44.app) WHICH HAS PRESET SETTINGS WITH DIFFERENT PLAYSTYLES (E.G. SNIPER, SUPER GM, SOLID DEFENDER, PAWN MASTER, ETC.) FOR THOSE WHO'S NOT FAMILIAR ON SETTING UP ENGINE SETTINGS.
 Notice: There's a bug in this app where pasted/uplaoded pgn/fen are not detected properly.
+
+---
+## 🎛️ Applying Preset Personalities (e.g., in Droidfish)
+
+You can easily load the preset personalities from the Yuuki App into any UCI-compatible GUI like **Droidfish** (Android) or **Cute Chess** (Windows/Linux).
+
+### Option A: Quick Install (INI file method)
+
+1. **Download** the specific preset INI file you want from the  
+   [`settings preset`](https://github.com/eryxveilen/yuuki-chess-engine/tree/main/settings%20preset) folder (e.g., `SUPERGM.ini`, `A8-sniper.ini`).
+
+2. **Move** the downloaded `.ini` file into the `Droidfish/uci` folder on your device.
+
+3. **Rename** the file to `Yuuki.ini` (overwrite if an existing file is present).
+
+4. **Restart** Droidfish or reload the Yuuki Engine. The new personality will now be active.
+
+---
+
+### Option B: Manual Configuration (GUI method)
+
+If you prefer not to move files or want to tweak specific values:
+
+1. Open Droidfish and go to the **Left Toolbar** → **Manage Chess Engines**.
+
+2. Select **Yuuki Engine** and tap **Set Options**.
+
+3. Manually adjust the options according to the key=value pairs listed in the  
+   [INI files](https://github.com/eryxveilen/yuuki-chess-engine/tree/main/settings%20preset).
+
+   For example, if the INI file contains:
+
+   ```
+   SkillLevel=20
+   Contempt=40
+   KingSafetyWeight=100
+   ```
+
+   Set these exact values in the corresponding option fields.
+
+4. Save the settings and return to the board. The new playstyle is now active.
+
+---
+> ⚡ **Tip:** To switch between personalities quickly, keep multiple renamed INI files handy (e.g., `Yuuki_SuperGM.ini`, `Yuuki_Sniper.ini`) and rename the active one to `Yuuki.ini` when needed.
 ---
 
 ## Features
