@@ -510,18 +510,15 @@ void scoreMoves(std::vector<Move>& moves, uint64_t hash, int ply) {
     for (auto& move : moves) {
         move.score = 0;
 
-        // Captures: score based on SEE (Static Exchange Evaluation)
         if (move.captured != PIECE_NONE) {
             int seeVal = SEE_PIECE_VALUES[move.captured] * 10 - SEE_PIECE_VALUES[move.piece];
             move.score += 100000 + seeVal;
         }
 
-        // Promotions
         if (move.promotion != PIECE_NONE) {
             move.score += 90000 + getPieceValue(move.promotion);
         }
 
-        // Hash move (from transposition table)
         if (g_ttSize > 0) {
             size_t idx = hash % g_ttSize;
             TTEntry* entry = &g_transpositionTable[idx];
@@ -530,19 +527,16 @@ void scoreMoves(std::vector<Move>& moves, uint64_t hash, int ply) {
             }
         }
 
-        // Killer moves
         if (ply < MAX_PLY) {
             if (movesEqual(move, g_killerMoves[ply][0])) move.score += 80000;
             if (movesEqual(move, g_killerMoves[ply][1])) move.score += 70000;
         }
 
-        // History heuristic
         int historyScore = g_historyTable[g_sideToMove][move.from][move.to];
         if (historyScore) {
             move.score += std::min(historyScore, 60000);
         }
 
-        // Counter-moves
         if (!g_moveHistory.empty()) {
             const Move& lastMove = g_moveHistory.back().move;
             if (g_counterMovesValid[1 - g_sideToMove][lastMove.from][lastMove.to]) {
