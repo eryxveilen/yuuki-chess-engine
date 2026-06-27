@@ -26,7 +26,7 @@ You can tweak its gameplay with 50+ controls on engine playstyle, making it very
 
 ---
 ### ALTERNATIVELY, YOU CAN USE THIS ENGINE ON [Yuuki App on Base44.com](https://yuuki-ch.base44.app) 
-
+---
 *Notice:*    There's a bug in this app where pasted/uplaoded pgn/fen are not detected properly.
 ---
 
