@@ -66,7 +66,7 @@ KingSafetyWeight=100
 - **Skill Levels** – 0–20 adjustable handicap mode
 - **Customizable Piece Values** – Fully adjustable piece valuations
 - **Opening Book** – Polyglot-compatible opening book support
-- **Move Ordering** – Killer moves, history heuristic, counter-moves, hash-move ordering
+- **Move Ordering** – Hash moves, killer moves, history heuristic, counter-moves, SEE-based capture ordering
 - **Endgame Evaluation** – Passed pawns, rook endgames, opposite bishops, pawn races
 - **Threading** – Up to 512 configurable threads
 
@@ -488,26 +488,76 @@ int quiescence(int ply, int alpha, int beta, int qDepth) {
 
 ### Move Ordering
 
-Priority order:
-1. Hash move (transposition table)
-2. Winning captures (SEE > 0)
-3. Killer moves
-4. Counter-moves
-5. Equal captures (SEE = 0)
-6. History heuristic
-7. Losing captures (SEE < 0)
+Move ordering uses a multi-stage scoring system to prioritize moves:
 
 ```cpp
-void orderMoves(std::vector<Move>& moves, uint64_t hash, int ply) {
+void scoreMoves(std::vector<Move>& moves, uint64_t hash, int ply) {
     for (auto& move : moves) {
-        scoreMoves(moves, hash, ply);
+        move.score = 0;
+
+        // Captures: score based on SEE (Static Exchange Evaluation)
+        if (move.captured != PIECE_NONE) {
+            int seeVal = SEE_PIECE_VALUES[move.captured] * 10 - SEE_PIECE_VALUES[move.piece];
+            move.score += 100000 + seeVal;
+        }
+
+        // Promotions
+        if (move.promotion != PIECE_NONE) {
+            move.score += 90000 + getPieceValue(move.promotion);
+        }
+
+        // Hash move (from transposition table)
+        if (g_ttSize > 0) {
+            size_t idx = hash % g_ttSize;
+            TTEntry* entry = &g_transpositionTable[idx];
+            if (entry->key == hash && entry->moveFrom == move.from && entry->moveTo == move.to) {
+                move.score += 200000;
+            }
+        }
+
+        // Killer moves
+        if (ply < MAX_PLY) {
+            if (movesEqual(move, g_killerMoves[ply][0])) move.score += 80000;
+            if (movesEqual(move, g_killerMoves[ply][1])) move.score += 70000;
+        }
+
+        // History heuristic
+        int historyScore = g_historyTable[g_sideToMove][move.from][move.to];
+        if (historyScore) {
+            move.score += std::min(historyScore, 60000);
+        }
+
+        // Counter-moves
+        if (!g_moveHistory.empty()) {
+            const Move& lastMove = g_moveHistory.back().move;
+            if (g_counterMovesValid[1 - g_sideToMove][lastMove.from][lastMove.to]) {
+                Move counterMove = g_counterMoves[1 - g_sideToMove][lastMove.from][lastMove.to];
+                if (movesEqual(move, counterMove)) {
+                    move.score += 65000;
+                }
+            }
+        }
     }
+}
+
+void orderMoves(std::vector<Move>& moves, uint64_t hash, int ply) {
+    scoreMoves(moves, hash, ply);
     
     std::sort(moves.begin(), moves.end(), [](const Move& a, const Move& b) {
         return a.score > b.score;
     });
 }
 ```
+
+**Priority order (by move score):**
+1. Hash move: +200000
+2. Winning captures (SEE > 0): +100000 + SEE value
+3. Promotions: +90000 + promotion piece value
+4. Killer moves (1st): +80000
+5. Killer moves (2nd): +70000
+6. Counter-moves: +65000
+7. History heuristic: +min(score, 60000)
+8. Other moves: 0
 
 ### Evaluation Example
 
