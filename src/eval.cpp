@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "pstables.h"
 #include "attack.h"
+#include "board.h"
 #include <algorithm>
 
 namespace Yuuki {
