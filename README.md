@@ -36,7 +36,7 @@ Get pre-compiled binaries for your platform:
 
 Use [Yuuki App on Base44.com](https://yuuki-ch.base44.app) with preset personalities (Sniper, Super GM, Solid Defender, Pawn Master).
 
-> ⚠️ **Known Issue:** Pasted/uploaded PGN and FEN detection may not work properly in the web app.
+> ⚠️ **Known Issue:** The Base44 web app currently has a bug where pasted or uploaded PGN and FEN strings are not detected properly. This is a front-end issue and does not affect the UCI engine binary. A fix is being worked on.
 
 ---
 
