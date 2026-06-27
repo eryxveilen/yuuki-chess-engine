@@ -32,7 +32,7 @@ Notice: There's a bug in this app where pasted/uplaoded pgn/fen are not detected
 ---
 ## 🎛️ Applying Preset Personalities (e.g., in Droidfish)
 
-You can easily load the preset personalities from the Yuuki App into any UCI-compatible GUI like **Droidfish** (Android) or **Cute Chess** (Windows/Linux).
+You can easily load the preset personalities from the Yuuki App into any UCI-compatible GUI like **Droidfish** (Android).
 
 ### Option A: Quick Install (INI file method)
 
