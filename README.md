@@ -48,7 +48,7 @@ Yuuki supports 50+ configurable parameters for different play styles.
 
 1. Download preset INI from [`settings preset`](https://github.com/eryxveilen/yuuki-chess-engine/tree/main/settings%20preset) folder (e.g., `SUPERGM.ini`, `A8-sniper.ini`)
 2. Move to `Droidfish/uci/` folder
-3. Rename to `Yuuki.ini`
+3. Rename to `yuuki-android-arm64-v8a.ini`
 4. Restart DroidFish
 
 ### Manual Configuration
