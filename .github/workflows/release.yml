@@ -1,7 +1,12 @@
-name: Build and Release Yuuki Engine
+name: Release Yuuki Engine
 
 on:
   workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'v1.1'
+        required: true
+        type: string
   push:
     tags:
       - 'v*'
@@ -82,6 +87,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ inputs.tag_name || github.ref_name }}
           files: release/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
