@@ -453,6 +453,7 @@ Opening:                        Endgame:
 ## Version History
 
 - **1.0** – Initial release with full UCI support.
+- **1.1** - Improved engine strength, optimized memory usage.
 
 ---
 
