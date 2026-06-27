@@ -25,9 +25,8 @@ You can tweak its gameplay with 50+ controls on engine playstyle, making it very
 **"Manage Chess Engines"** > **"Set Options"**
 
 ---
-### ALTERNATIVELY, YOU CAN USE THIS ENGINE ON [Yuuki App on Base44.com](https://yuuki-ch.base44.app) 
----
-*Notice:*    There's a bug in this app where pasted/uplaoded pgn/fen are not detected properly.
+### ALTERNATIVELY, YOU CAN USE THIS ENGINE ON [Yuuki App on Base44.com](https://yuuki-ch.base44.app) WHICH HAS PRESET SETTINGS WITH DIFFERENT PLAYSTYLES (E.G. SNIPER, SUPER GM, SOLID DEFENDER, PAWN MASTER, ETC.) FOR THOSE WHO'S NOT FAMILIAR ON SETTING UP ENGINE SETTINGS.
+Notice: There's a bug in this app where pasted/uplaoded pgn/fen are not detected properly.
 ---
 
 ## Features
