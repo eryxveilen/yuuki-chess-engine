@@ -1,8 +1,9 @@
 # Yuuki Chess Engine Makefile
-# For Linux/macOS/Windows (MinGW)
+# Supports cross-compilation via CROSS_COMPILE variable
+# Usage: make (defaults to native) or make CROSS_COMPILE=aarch64-linux-gnu-
 
-CXX = g++
-CXXFLAGS = -std=c++17 -O3 -flto -march=native -Wall -Wextra -pthread
+CXX = $(CROSS_COMPILE)g++
+CXXFLAGS = -std=c++17 -O3 -flto -pthread -Wall -Wextra
 TARGET = yuuki
 SOURCES = $(wildcard src/*.cpp)
 OBJECTS = $(SOURCES:.cpp=.o)
