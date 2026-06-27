@@ -53,7 +53,7 @@ Yuuki supports 50+ configurable parameters for different play styles.
 
 ### Manual Configuration
 
-1. Open DroidFish → **Manage Chess Engines** → **Yuuki** → **Set Options**
+1. Open DroidFish → **Manage Chess Engines** → **Set Options**
 2. Adjust values according to INI files
 3. Save and return to board
 
