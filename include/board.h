@@ -12,6 +12,7 @@ uint64_t getPositionHash();
 uint64_t getPawnHash();
 void setFEN(const std::string& fen);
 std::string getFEN();
+bool isInCheck(int color);
 
 }
 
