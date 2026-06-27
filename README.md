@@ -1,130 +1,109 @@
 # Yuuki Chess Engine
 
 **Version:** 1.1  
-**Author:** [Eryx/RJ](https://facebook.com/profile.php?id=61590704998111)    
+**Author:** [Eryx/RJ](https://facebook.com/profile.php?id=61590704998111)  
 **License:** MIT  
 
-Yuuki is a UCI-compatible chess engine written in C++17. It features an advanced evaluation function, sophisticated search algorithms, and a modular codebase designed for clarity and extensibility. There's a release here compatible with arm64-v8a. Feel free to compile it to be compatible with your devices!
+Yuuki is a UCI-compatible chess engine written in C++17. It features an advanced evaluation function, sophisticated search algorithms, and a modular codebase designed for clarity and extensibility.
 
 ---
 
-## Installation (for arm64-v8a)
+## 📦 Installation
 
-1. Extract the [Yuuki.zip](https://github.com/user-attachments/files/29368204/Yuuki.zip) then load it to Chess GUI Apps.
-2. Recommended App: [DroidFish.apk](https://f-droid.org/en/packages/org.petero.droidfish/)
-
-### Step-by-step:
+### Android (arm64-v8a)
 
 1. Download [Yuuki.zip](https://github.com/user-attachments/files/29368204/Yuuki.zip) and [DroidFish.apk](https://f-droid.org/en/packages/org.petero.droidfish/)
-2. Install Droidfish and Extract Yuuki.zip
-3. Move the extracted file to: `Droidfish/uci/`
-4. Open Droidfish, open the left toolbar.
-5. Click **"Manage Chess Engines"** > **"Select Engines"** > **"Yuuki"**
+2. Install DroidFish and extract Yuuki.zip
+3. Move the extracted binary to: `Droidfish/uci/`
+4. Open DroidFish → Left Toolbar → **"Manage Chess Engines"** → **"Select Engines"** → **"Yuuki"**
 
-You can tweak its gameplay with 50+ controls on engine playstyle, making it very unique among any other engines:  
-**"Manage Chess Engines"** > **"Set Options"**
+### Web Interface
 
----
+Use [Yuuki App on Base44.com](https://yuuki-ch.base44.app) with preset personalities (Sniper, Super GM, Solid Defender, Pawn Master).
 
-### ALTERNATIVELY, YOU CAN USE THIS ENGINE ON [Yuuki App on Base44.com](https://yuuki-ch.base44.app) WHICH HAS PRESET SETTINGS WITH DIFFERENT PLAYSTYLES (E.G. SNIPER, SUPER GM, SOLID DEFENDER, PAWN MASTER, ETC.) FOR THOSE WHO'S NOT FAMILIAR ON SETTING UP ENGINE SETTINGS.
-Notice: There's a bug in this app where pasted/uplaoded pgn/fen are not detected properly.
-
----
-## 🎛️ Applying Preset Personalities (e.g., in Droidfish)
-
-You can easily load the preset personalities from the Yuuki App into any UCI-compatible GUI like **Droidfish** (Android).
-
-### Option A: Quick Install (INI file method)
-
-1. **Download** the specific preset INI file you want from the  
-   [`settings preset`](https://github.com/eryxveilen/yuuki-chess-engine/tree/main/settings%20preset) folder (e.g., `SUPERGM.ini`, `A8-sniper.ini`).
-
-2. **Move** the downloaded `.ini` file into the `Droidfish/uci` folder on your device.
-
-3. **Rename** the file to `Yuuki.ini` (overwrite if an existing file is present).
-
-4. **Restart** Droidfish or reload the Yuuki Engine. The new personality will now be active.
+> ⚠️ **Known Issue:** Pasted/uploaded PGN and FEN detection may not work properly in the web app.
 
 ---
 
-### Option B: Manual Configuration (GUI method)
+## 🎛️ Engine Personalities
 
-If you prefer not to move files or want to tweak specific values:
+Yuuki supports 50+ configurable parameters for different play styles.
 
-1. Open Droidfish and go to the **Left Toolbar** → **Manage Chess Engines**.
+### Quick Setup via INI Files
 
-2. Select **Yuuki Engine** and tap **Set Options**.
+1. Download preset INI from [`settings preset`](https://github.com/eryxveilen/yuuki-chess-engine/tree/main/settings%20preset) folder (e.g., `SUPERGM.ini`, `A8-sniper.ini`)
+2. Move to `Droidfish/uci/` folder
+3. Rename to `Yuuki.ini`
+4. Restart DroidFish
 
-3. Manually adjust the options according to the key=value pairs listed in the  
-   [INI files](https://github.com/eryxveilen/yuuki-chess-engine/tree/main/settings%20preset).
+### Manual Configuration
 
-   For example, if the INI file contains:
+1. Open DroidFish → **Manage Chess Engines** → **Yuuki** → **Set Options**
+2. Adjust values according to INI files
+3. Save and return to board
 
-   ```
-   SkillLevel=20
-   Contempt=40
-   KingSafetyWeight=100
-   ```
+**Example:**
+```ini
+SkillLevel=20
+Contempt=40
+KingSafetyWeight=100
+```
 
-   Set these exact values in the corresponding option fields.
-
-4. Save the settings and return to the board. The new playstyle is now active.
+> 💡 **Tip:** Keep multiple renamed INI files (`Yuuki_SuperGM.ini`, `Yuuki_Sniper.ini`) and swap them as needed.
 
 ---
-> ⚡ **Tip:** To switch between personalities quickly, keep multiple renamed INI files handy (e.g., `Yuuki_SuperGM.ini`, `Yuuki_Sniper.ini`) and rename the active one to `Yuuki.ini` when needed.
----
 
-## Features
+## ✨ Features
 
 ### Core Engine
 
-- **UCI Protocol** – Full support for Universal Chess Interface.
-- **Advanced Search** – Alpha-beta pruning with iterative deepening, Principal Variation Search (PVS).
-- **Transposition Table** – Configurable hash table (up to 4096 MB) for move caching with Zobrist hashing.
-- **Sophisticated Evaluation** – Tapered evaluation with game-phase interpolation (opening/middlegame/endgame).
-- **Search Optimizations** – Late Move Reductions (LMR), null-move pruning, futility pruning, razoring, aspiration windows, check extensions, singular extensions.
-- **Quiescence Search** – Captures-only search with delta pruning and SEE (Static Exchange Evaluation).
-- **Skill Levels** – Adjustable from 0–20 for handicapped play.
-- **Piece Values** – Fully adjustable piece values (pawn, knight, bishop, rook, queen, king).
-- **Opening Book** – Polyglot-compatible opening book support.
-- **Move Ordering** – Killer moves, history heuristic, counter-moves, and hash-move ordering.
-- **Endgame Evaluation** – Specialized endgame scoring: passed pawns, rook endgames, opposite bishops, pawn races.
-- **Threading** – Supports up to 512 threads (configurable).
+- **UCI Protocol** – Full Universal Chess Interface support
+- **Advanced Search** – Alpha-beta pruning with iterative deepening and Principal Variation Search (PVS)
+- **Transposition Table** – Configurable hash table (1–4096 MB) with Zobrist hashing
+- **Sophisticated Evaluation** – Tapered evaluation with game-phase interpolation
+- **Search Optimizations** – LMR, null-move pruning, futility pruning, razoring, aspiration windows, check extensions, singular extensions
+- **Quiescence Search** – Captures-only search with delta pruning and SEE
+- **Skill Levels** – 0–20 adjustable handicap mode
+- **Customizable Piece Values** – Fully adjustable piece valuations
+- **Opening Book** – Polyglot-compatible opening book support
+- **Move Ordering** – Killer moves, history heuristic, counter-moves, hash-move ordering
+- **Endgame Evaluation** – Passed pawns, rook endgames, opposite bishops, pawn races
+- **Threading** – Up to 512 configurable threads
 
 ### Evaluation Components
 
-| Component | Description |
-|-----------|-------------|
-| **Material** | Base piece values with adjustable weights. |
-| **Piece-Square Tables (PST)** | Tapered MG/EG tables for all pieces. |
-| **Mobility** | Piece-specific mobility bonuses for knights, bishops, rooks, queens. |
-| **Pawn Structure** | Isolated, doubled, backward, passed, candidate, chained, central, advanced pawns. |
-| **King Safety** | Pawn shield, pawn storm, attack zone, king tropism, open files near king. |
-| **Rooks** | Open/semi-open files, 7th-rank bonuses, rook coordination. |
-| **Knights** | Outpost detection, rim penalties, pawn protection. |
-| **Bishops** | Bishop pair bonus, bad bishop penalty, mobility traps, discovery threats. |
-| **Threats** | Hanging pieces, queen early development, trapped pieces. |
-| **Space** | Control of key squares in the center and extended center. |
-| **Tropism** | Piece proximity to enemy king. |
-| **Pins** | Penalty for pinned pieces. |
-| **Material Imbalance** | Minor-piece imbalances, rook/queen imbalances. |
-| **Initiative** | Mobility advantage, center control, tempo bonus. |
-| **Tactical Motifs** | Forks, undefended pieces, tactical threats. |
-| **Piece Coordination** | Minor-piece coordination, rook alignment, queen-minor links. |
-| **Weaknesses** | Undefended pieces, weak pawns near king. |
-| **Endgame Specials** | Passed pawn races, opposite bishops, rook endgames. |
+| Component | Features |
+|-----------|----------|
+| **Material** | Base piece values with adjustable weights |
+| **Piece-Square Tables** | Tapered MG/EG tables for all pieces |
+| **Mobility** | Piece-specific bonuses for knights, bishops, rooks, queens |
+| **Pawn Structure** | Isolated, doubled, backward, passed, candidate, chained, central pawns |
+| **King Safety** | Pawn shield, pawn storm, attack zone, king tropism, open files |
+| **Rooks** | Open/semi-open files, 7th-rank bonuses, coordination |
+| **Knights** | Outpost detection, rim penalties, pawn protection |
+| **Bishops** | Bishop pair bonus, bad bishop penalty, discovery threats |
+| **Threats** | Hanging pieces, queen development, trapped pieces |
+| **Space** | Center and extended center control |
+| **Tropism** | Piece proximity to enemy king |
+| **Pins** | Pinned piece penalties |
+| **Material Imbalance** | Minor-piece and rook/queen imbalances |
+| **Initiative** | Mobility advantage, center control, tempo |
+| **Tactical Motifs** | Forks, undefended pieces, threats |
+| **Piece Coordination** | Minor coordination, rook alignment, queen-minor links |
+| **Weaknesses** | Undefended pieces, weak pawns near king |
+| **Endgame Specials** | Passed pawn races, opposite bishops, rook endgames |
 
 ---
 
-## Usage
+## 🚀 Usage
 
-### As UCI Engine
+### Running the Engine
 
 ```bash
 ./yuuki
 ```
 
-Then use standard UCI commands:
+### UCI Commands
 
 ```
 uci
@@ -138,21 +117,21 @@ go depth 12
 
 | Command | Description |
 |---------|-------------|
-| `uci` | Display engine info and options. |
-| `d` | Display current board position. |
-| `eval` | Show static evaluation score. |
-| `perft [depth]` | Run perft divide test. |
-| `divide [depth]` | Run perft divide and show per-move counts. |
-| `go depth N` | Search to depth N. |
-| `go movetime MS` | Search for MS milliseconds. |
-| `go infinite` | Search until `stop` command. |
-| `stop` | Stop current search. |
-| `ponderhit` | Respond to pondering hit. |
-| `debug [on/off]` | Enable/disable debug output. |
+| `uci` | Display engine info and options |
+| `d` | Display current board position |
+| `eval` | Show static evaluation score |
+| `perft [depth]` | Run perft divide test |
+| `divide [depth]` | Run perft divide with per-move counts |
+| `go depth N` | Search to depth N |
+| `go movetime MS` | Search for MS milliseconds |
+| `go infinite` | Search until `stop` command |
+| `stop` | Stop current search |
+| `ponderhit` | Respond to pondering hit |
+| `debug [on/off]` | Enable/disable debug output |
 
 ---
 
-## UCI Options
+## ⚙️ UCI Options
 
 | Option | Type | Default | Range |
 |--------|------|---------|-------|
@@ -228,237 +207,448 @@ go depth 12
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
 ### Board Representation (0x88)
 
-Yuuki uses a 128-square 0x88 board representation:
+Yuuki uses a 128-square 0x88 board representation for efficient move validation.
 
-- Squares are indexed as `(rank << 4) | file`
-- Valid squares: `(sq & 0x88) === 0`
-- Piece storage: `{ piece: PIECE_*, color: COLOR_* }`
-
-**Piece Constants:**
-```
-PIECE_NONE = 0
-PIECE_PAWN = 1
-PIECE_KNIGHT = 2
-PIECE_BISHOP = 3
-PIECE_ROOK = 4
-PIECE_QUEEN = 5
-PIECE_KING = 6
+**Square Indexing:**
+```cpp
+int sq = (rank << 4) | file;
+bool isValid = (sq & 0x88) == 0;
 ```
 
-**Color Constants:**
-```
-COLOR_WHITE = 0
-COLOR_BLACK = 1
+**Piece Definition:**
+```cpp
+struct Piece {
+    uint8_t piece;
+    uint8_t color;
+};
 ```
 
-**Castling Rights:**
-```
-CASTLE_WK = 1  // White kingside
-CASTLE_WQ = 2  // White queenside
-CASTLE_BK = 4  // Black kingside
-CASTLE_BQ = 8  // Black queenside
+**Constants:**
+```cpp
+namespace Yuuki {
+    const int PIECE_NONE = 0;
+    const int PIECE_PAWN = 1;
+    const int PIECE_KNIGHT = 2;
+    const int PIECE_BISHOP = 3;
+    const int PIECE_ROOK = 4;
+    const int PIECE_QUEEN = 5;
+    const int PIECE_KING = 6;
+
+    const int COLOR_WHITE = 0;
+    const int COLOR_BLACK = 1;
+
+    const int CASTLE_WK = 1;
+    const int CASTLE_WQ = 2;
+    const int CASTLE_BK = 4;
+    const int CASTLE_BQ = 8;
+}
 ```
 
 ### Move Representation
 
-```javascript
-{
-    from: number,          // Source square
-    to: number,            // Destination square
-    piece: number,         // Moving piece
-    captured: number,      // Captured piece (or NONE)
-    promotion: number,     // Promotion piece (or NONE)
-    flags: number,         // FLAG_NONE, FLAG_ENPASSANT, FLAG_CASTLING, FLAG_PAWN_DOUBLE, FLAG_PROMOTION
-    score: number          // Move ordering score
-}
+```cpp
+struct Move {
+    int from;
+    int to;
+    int piece;
+    int captured;
+    int promotion;
+    int flags;
+    int score;
+};
+
+const int FLAG_NONE = 0;
+const int FLAG_ENPASSANT = 1;
+const int FLAG_CASTLING = 2;
+const int FLAG_PAWN_DOUBLE = 4;
+const int FLAG_PROMOTION = 8;
 ```
 
 ### Zobrist Hashing
 
-- 64-bit keys for each piece on each square
-- Separate keys for side-to-move, castling rights, and en-passant squares
-- Used for:
-  - Transposition table indexing
-  - Position repetition detection
-  - Pawn structure hashing (evaluation cache)
+```cpp
+uint64_t g_zobristKeys[128][2][7];
+uint64_t g_zobristSide;
+uint64_t g_zobristCastling[4];
+uint64_t g_zobristEnPassant[128];
+
+uint64_t getPositionHash() {
+    return computeZobristHash();
+}
+```
 
 ### Game Phases
 
-Yuuki uses a **tapered evaluation** that smoothly interpolates between middlegame and endgame scores:
+Tapered evaluation smoothly interpolates between middlegame and endgame:
 
+```cpp
+void updateGamePhase() {
+    int phase = 0;
+    for (int i = 0; i < 128; i++) {
+        if (isValidSquare(i)) {
+            const Piece& p = g_board[i];
+            if (p.piece != PIECE_NONE && p.piece != PIECE_PAWN && p.piece != PIECE_KING) {
+                phase += PIECE_PHASE_VALUE[p.piece];
+            }
+        }
+    }
+    g_phaseScore = phase;
+    if (phase > 18) {
+        g_gamePhase = GAME_PHASE_OPENING;
+    } else if (phase > 8) {
+        g_gamePhase = GAME_PHASE_MIDDLEGAME;
+    } else {
+        g_gamePhase = GAME_PHASE_ENDGAME;
+    }
+}
+
+int interpolateScore(int mgScore, int egScore) {
+    int phase = g_phaseScore;
+    if (phase > 24) phase = 24;
+    return ((mgScore * phase) + (egScore * (24 - phase))) / 24;
+}
 ```
-Phase score = sum of piece-phase values:
+
+**Phase Values:**
 - Knight/Bishop: 1 point each
 - Rook: 2 points each
 - Queen: 4 points each
 - Pawns/Kings: 0 points
-
-Total phase max = 24 (2 knights + 2 bishops + 2 rooks + 1 queen)
-
-Interpolation:
-- phase > 18: Opening
-- phase 8–18: Middlegame
-- phase < 8: Endgame
-
-Score = (mg_score * phase + eg_score * (24 - phase)) / 24
-```
+- Total max: 24
 
 ### Move Generation
 
-Pseudo-legal move generation with legal validation via **make/undo**:
+Pseudo-legal move generation validated via make/undo:
 
-1. Generate all pseudo-legal moves for the current side.
-2. For each move, `makeMove()` updates the board state.
-3. Check if the current side's king is in check (`isInCheck()`).
-4. If not in check, the move is legal.
-5. `undoMove()` restores the previous state.
+```cpp
+std::vector<Move> generateLegalMovesImpl(int color) {
+    auto pseudoMoves = generatePseudoLegalMoves(color, false);
+    std::vector<Move> legalMoves;
+    legalMoves.reserve(pseudoMoves.size());
 
-**Move Types:**
-- Normal moves
-- Pawn double pushes (sets en-passant flag)
-- En-passant captures
-- Castling (king-side and queen-side)
-- Promotions (queen, rook, bishop, knight)
+    for (const auto& move : pseudoMoves) {
+        makeMove(move);
+        if (!isInCheck(color)) {
+            legalMoves.push_back(move);
+        }
+        undoMove();
+    }
+
+    return legalMoves;
+}
+```
 
 ### Search Algorithm
 
-**Principal Variation Search (PVS)** with iterative deepening:
+**Iterative Deepening with Aspiration Windows:**
 
-```javascript
-function iterativeDeepening(maxDepth, timeLimit, infinite) {
-    for (depth = 1; depth <= maxDepth; depth++) {
-        // Aspiration window
-        alpha = bestScore - window
-        beta = bestScore + window
+```cpp
+Move iterativeDeepening(int maxDepth, int timeLimit, bool infinite) {
+    Move bestMove = {0, 0, 0, 0, 0, 0, 0};
+    int bestScore = 0;
+    int alpha = -SCORE_INFINITE;
+    int beta = SCORE_INFINITE;
+    
+    for (int depth = 1; depth <= maxDepth; depth++) {
+        if (shouldStopTime(timeLimit)) break;
         
-        result = alphaBetaRoot(depth, alpha, beta)
+        int window = g_engineOptions.aspirationWindow;
+        alpha = bestScore - window;
+        beta = bestScore + window;
         
-        // Re-search on fail-low/fail-high
-        if (score <= alpha || score >= beta) {
-            result = alphaBetaRoot(depth, -INF, +INF)
+        ABResult result = alphaBetaRoot(depth, alpha, beta);
+        
+        if (result.score <= alpha || result.score >= beta) {
+            result = alphaBetaRoot(depth, -SCORE_INFINITE, SCORE_INFINITE);
         }
         
-        // Time management
-        if (stableMove && timeUsage > threshold) break
+        bestScore = result.score;
+        bestMove = result.move;
     }
+    
+    return bestMove;
 }
 ```
 
-**Alpha-Beta with LMR:**
+**Principal Variation Search:**
 
-```
-alphaBeta(ply, depth, alpha, beta, isPV, allowNull) {
-    // Transposition table probe
-    if (ttResult.hit) return ttResult
-    
-    // Check extensions
-    if (inCheck) depth++
-    
-    // Null-move pruning
-    if (allowNull && staticEval >= beta && depth >= nullDepthLimit) {
-        makeNullMove()
-        score = -alphaBeta(..., beta-1)
-        if (score >= beta) return beta
+```cpp
+ABResult alphaBeta(int ply, int depth, int alpha, int beta, bool isPV, bool allowNull) {
+    if (depth <= 0) {
+        return {quiescence(ply, alpha, beta, 0), Move{0, 0, 0, 0, 0, 0, 0}};
     }
-    
-    // Razoring
-    if (depth <= razorDepth && staticEval + razorMargin < beta) {
-        qScore = quiescence(...)
-        if (qScore < beta) return qScore
+
+    uint64_t hash = getPositionHash();
+    TTEntry* ttEntry = probeTranspositionTable(hash, depth, alpha, beta);
+    if (ttEntry != nullptr) {
+        return {ttEntry->score, Move{ttEntry->moveFrom, ttEntry->moveTo, 0, 0, ttEntry->movePromotion, 0, 0}};
     }
+
+    int staticEval = evaluate();
     
-    // Futility pruning
-    if (depth <= futilityDepth && staticEval - futilityMargin >= beta) {
-        return beta
+    if (isInCheck(g_sideToMove)) {
+        depth++;
     }
-    
-    // Move ordering
-    orderMoves(moves, hash, ply)
-    
-    for each move:
-        makeMove()
+
+    if (allowNull && staticEval >= beta && depth >= g_engineOptions.nullMoveDepthLimit) {
+        makeNullMove();
+        ABResult result = alphaBeta(ply + 1, depth - g_engineOptions.nullMoveReduction - 1, -beta, -beta + 1, false, false);
+        undoNullMove();
         
-        // Late Move Reduction
-        if (depth >= LMRThreshold && moveCount >= LMRMoveThreshold) {
-            reduction = LMR_Table[depth][moveCount]
-            score = -alphaBeta(depth - reduction, alpha+1)
-            if (score > alpha) {
-                // Full-depth search
-                score = -alphaBeta(depth - 1, ...)
+        if (-result.score >= beta) {
+            return {beta, Move{0, 0, 0, 0, 0, 0, 0}};
+        }
+    }
+
+    std::vector<Move> moves = generatePseudoLegalMoves(g_sideToMove, false);
+    orderMoves(moves, hash, ply);
+
+    int alphaOrig = alpha;
+    ABResult best = {alpha, Move{0, 0, 0, 0, 0, 0, 0}};
+    int moveCount = 0;
+
+    for (const auto& move : moves) {
+        makeMove(move);
+        if (isInCheck(1 - g_sideToMove)) {
+            undoMove();
+            continue;
+        }
+
+        ABResult result;
+        if (moveCount == 0) {
+            result = alphaBeta(ply + 1, depth - 1, -beta, -alpha, isPV, true);
+            result.score = -result.score;
+        } else {
+            result = alphaBeta(ply + 1, depth - 1, -alpha - 1, -alpha, false, true);
+            result.score = -result.score;
+            
+            if (result.score > alpha && result.score < beta) {
+                result = alphaBeta(ply + 1, depth - 1, -beta, -result.score, isPV, true);
+                result.score = -result.score;
             }
         }
-        
-        undoMove()
-        updateKillers(), updateHistory()
-        
-        if (score > alpha) {
-            alpha = score
-            if (score >= beta) return beta
+
+        undoMove();
+        moveCount++;
+
+        if (result.score > best.score) {
+            best.score = result.score;
+            best.move = move;
+            
+            if (best.score > alpha) {
+                alpha = best.score;
+                if (alpha >= beta) {
+                    storeTranspositionTable(hash, depth, alpha, TT_BETA, move);
+                    return best;
+                }
+            }
         }
+    }
+
+    int flag = (best.score <= alphaOrig) ? TT_ALPHA : (best.score >= beta) ? TT_BETA : TT_EXACT;
+    storeTranspositionTable(hash, depth, best.score, flag, best.move);
+    
+    return best;
 }
 ```
 
-### Quiescence Search
+**Quiescence Search:**
 
-To avoid the **horizon effect**, Yuuki performs a quiescence search:
+```cpp
+int quiescence(int ply, int alpha, int beta, int qDepth) {
+    int standPat = evaluate();
+    
+    if (standPat >= beta) return beta;
+    if (standPat > alpha) alpha = standPat;
 
-```
-quiescence(ply, alpha, beta, qDepth) {
-    standPat = evaluate()
-    if (standPat >= beta) return beta
-    if (standPat > alpha) alpha = standPat
-    
-    // Delta pruning
-    if (standPat + delta < alpha) return alpha
-    
-    // Generate and sort captures
-    captures = generateCaptures()
-    for each capture:
-        makeMove()
-        score = -quiescence(...)
-        undoMove()
-        if (score >= beta) return beta
-        if (score > alpha) alpha = score
-    
-    return alpha
+    const int DELTA_MARGIN = 200;
+    if (standPat + DELTA_MARGIN < alpha) return alpha;
+
+    std::vector<Move> captures = generateCaptureMoves(g_sideToMove);
+    orderMoves(captures, 0, ply);
+
+    for (const auto& move : captures) {
+        makeMove(move);
+        
+        int score = -quiescence(ply + 1, -beta, -alpha, qDepth + 1);
+        
+        undoMove();
+
+        if (score >= beta) return beta;
+        if (score > alpha) alpha = score;
+    }
+
+    return alpha;
 }
 ```
 
 ### Move Ordering
 
-Moves are scored and sorted using multiple heuristics:
+Priority order:
+1. Hash move (transposition table)
+2. Winning captures (SEE > 0)
+3. Killer moves
+4. Counter-moves
+5. Equal captures (SEE = 0)
+6. History heuristic
+7. Losing captures (SEE < 0)
 
-| Priority | Source |
-|----------|--------|
-| 1 | Hash move (from transposition table) |
-| 2 | Winning captures (SEE > 0) |
-| 3 | Killer moves (two per ply) |
-| 4 | Counter-moves |
-| 5 | Equal captures (SEE = 0) |
-| 6 | History heuristic |
-| 7 | Losing captures (SEE < 0) |
-| 8 | Remaining quiet moves |
+```cpp
+void orderMoves(std::vector<Move>& moves, uint64_t hash, int ply) {
+    for (auto& move : moves) {
+        scoreMoves(moves, hash, ply);
+    }
+    
+    std::sort(moves.begin(), moves.end(), [](const Move& a, const Move& b) {
+        return a.score > b.score;
+    });
+}
+```
 
-### Evaluation Details
+### Evaluation Example
 
-#### Material
-Base values:
-- Pawn: 100
-- Knight: 320
-- Bishop: 330
-- Rook: 500
-- Queen: 950
-- King: 20000
+```cpp
+int evaluateMaterial() {
+    int score = 0;
+    for (int i = 0; i < 128; i++) {
+        if (isValidSquare(i)) {
+            const Piece& p = g_board[i];
+            if (p.piece != PIECE_NONE) {
+                int value = getPieceValue(p.piece);
+                score += (p.color == COLOR_WHITE) ? value : -value;
+            }
+        }
+    }
+    return score;
+}
 
-#### Piece-Square Tables (PST)
-Tapered tables for all pieces with **mirrored** values for black pieces. Example pawn PST:
+int evaluateFull() {
+    int mgScore = 0;
+    int egScore = 0;
+
+    mgScore += evaluateMaterial();
+    mgScore += evaluatePST();
+    mgScore += evaluateMobility();
+    mgScore += evaluatePawnStructure();
+    mgScore += evaluateKingSafety();
+    mgScore += evaluateRooks();
+    mgScore += evaluateKnights();
+    mgScore += evaluateBishops();
+    mgScore += evaluateThreats();
+    mgScore += evaluateSpace();
+
+    egScore += evaluateMaterial();
+    egScore += evaluatePST();
+    egScore += evaluateMobility();
+    egScore += evaluatePawnStructure();
+    egScore += evaluateRooks();
+
+    int finalScore = interpolateScore(mgScore, egScore);
+    
+    if (g_sideToMove == COLOR_BLACK) {
+        finalScore = -finalScore;
+    }
+
+    return finalScore;
+}
+```
+
+### Static Exchange Evaluation (SEE)
+
+```cpp
+int see(int sq) {
+    int seeGain[32];
+    Piece occupiers[128];
+    for (int i = 0; i < 128; i++) {
+        if (isValidSquare(i)) occupiers[i] = g_board[i];
+        else occupiers[i] = {PIECE_NONE, 0};
+    }
+
+    int targetPiece = occupiers[sq].piece;
+    int depth = 0;
+    int currentColor = g_sideToMove;
+
+    seeGain[depth] = targetPiece != PIECE_NONE ? SEE_PIECE_VALUES[targetPiece] : 0;
+
+    do {
+        std::vector<std::pair<int, int>> attackers;
+        for (int i = 0; i < 128; i++) {
+            if (!isValidSquare(i) || occupiers[i].piece == PIECE_NONE || occupiers[i].color != currentColor) continue;
+            const Piece& piece = occupiers[i];
+            
+            if (pieceAttacksSquare(i, piece, sq)) {
+                attackers.push_back({SEE_PIECE_VALUES[piece.piece], i});
+            }
+        }
+
+        if (attackers.empty()) break;
+
+        std::sort(attackers.begin(), attackers.end(), [](const auto& a, const auto& b) {
+            return a.first < b.first;
+        });
+
+        auto attacker = attackers[0];
+        depth++;
+        seeGain[depth] = SEE_PIECE_VALUES[targetPiece] - seeGain[depth - 1];
+        targetPiece = occupiers[attacker.second].piece;
+        occupiers[attacker.second] = {PIECE_NONE, 0};
+        currentColor = 1 - currentColor;
+
+    } while (depth < 31);
+
+    while (depth > 0) {
+        seeGain[depth - 1] = -std::max(-seeGain[depth - 1], seeGain[depth]);
+        depth--;
+    }
+
+    return seeGain[0];
+}
+```
+
+### Transposition Table
+
+```cpp
+struct TTEntry {
+    uint64_t key;
+    int depth;
+    int score;
+    int flag;
+    int moveFrom;
+    int moveTo;
+    int movePromotion;
+    int age;
+};
+
+const int TT_EXACT = 0;
+const int TT_ALPHA = 1;
+const int TT_BETA = 2;
+
+void storeTranspositionTable(uint64_t hash, int depth, int score, int flag, const Move& move) {
+    if (g_ttSize == 0) return;
+    size_t idx = hash % g_ttSize;
+    TTEntry* entry = &g_transpositionTable[idx];
+    if (entry->key != 0 && entry->depth > depth + 2) return;
+    entry->key = hash;
+    entry->depth = depth;
+    entry->score = score;
+    entry->flag = flag;
+    entry->moveFrom = move.from;
+    entry->moveTo = move.to;
+    entry->movePromotion = move.promotion;
+    entry->age = g_fullMoveNumber;
+}
+```
+
+### Piece-Square Tables
+
+Example pawn PST (tapered):
 
 ```
-Opening:                        Endgame:
+Middlegame:                     Endgame:
 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
 50  50  50  50  50  50  50  50  80  80  80  80  80  80  80  80
 10  10  20  30  30  20  10  10  50  50  50  50  50  50  50  50
@@ -469,46 +659,34 @@ Opening:                        Endgame:
 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
 ```
 
-#### King Safety
-- Pawn shield around king (weighted by proximity)
-- Pawn storm from enemy pawns
-- Attack zone: pieces within 3 squares of enemy king
-- Open files near king
-- Weak squares near king
+---
 
-#### Passed Pawns
-- Bonus based on distance to promotion
-- Connected passed pawns get additional bonus
-- Candidate passed pawns (one enemy pawn blocking) get minor bonus
+## 📊 Performance
+
+- **Transposition Table**: Up to 4096 MB with configurable sizing
+- **LMR Table**: Precomputed reductions up to depth 64
+- **Zobrist Hashing**: 64-bit keys for fast position identification
+- **Move Generation**: Optimized 0x88 board representation
+- **Time Management**: Dynamic allocation with move overhead compensation
+- **Skill Levels**: Proportional node reduction + intentional tactical oversights
 
 ---
 
-## Performance Notes
+## 📝 Version History
 
-- **Transposition Table**: Size configurable up to 4096 MB, stores entries with depth, score, flag, and best move.
-- **LMR Table**: Precomputed reduction table up to depth 64.
-- **Futility/Razor Margins**: Dynamic margins based on depth.
-- **History Heuristics**: Decay to prevent overflow.
-- **Time Management**: Uses "Slow Mover" factor, move overhead, and emergency buffer.
-- **Skill Levels**: Lower skill = fewer nodes searched + intentional blunders.
+- **1.0** – Initial release with full UCI support
+- **1.1** – Improved engine strength, optimized memory usage
 
 ---
 
-## Version History
+## 🙏 Credits
 
-- **1.0** – Initial release with full UCI support.
-- **1.1** - Improved engine strength, optimized memory usage.
-
----
-
-## Credits
-
-- **Engine**: Eryx
-- **Opening Book Format**: Polyglot compatible
-- **Inspired By**: Stockfish, Ethereal, and other open-source chess engines
+- **Engine Developer**: Eryx
+- **Opening Book Format**: Polyglot-compatible
+- **Inspired By**: Stockfish, Ethereal, and open-source chess engine community
 
 ---
 
-## License
+## 📄 License
 
 MIT License – see [LICENSE](LICENSE) for details.
