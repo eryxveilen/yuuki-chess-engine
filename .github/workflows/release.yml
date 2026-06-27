@@ -1,77 +1,158 @@
-name: Build and Release Yuuki Engine
+name: Build and Release Yuuki Engine (Multi-Arch)
 
 on:
   push:
     tags:
-      - 'v*'  # Triggers when you push a tag like v1.1, v1.2, etc.
+      - 'v*'
 
 jobs:
-  # 1. Build for Windows (x64)
+  # ==================== WINDOWS (x86 + x64) ====================
   build-windows:
-    runs-on: windows-latest
+    name: Windows (${{ matrix.arch }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [x86, x64]
     steps:
       - uses: actions/checkout@v4
-      - name: Compile for Windows
+      - name: Install MinGW
         run: |
-          g++ -std=c++17 -O3 -static -pthread src/*.cpp -o yuuki.exe
-      - name: Upload Binary (Artifact)
-        uses: actions/upload-artifact@v4
+          sudo apt update
+          sudo apt install -y gcc-mingw-w64-x86-64 gcc-mingw-w64-i686
+      - name: Compile (${{ matrix.arch }})
+        run: |
+          if [ "${{ matrix.arch }}" = "x64" ]; then
+            CROSS=x86_64-w64-mingw32-
+            OUT=yuuki-x64.exe
+          else
+            CROSS=i686-w64-mingw32-
+            OUT=yuuki-x86.exe
+          fi
+          make CROSS_COMPILE=$CROSS
+          mv yuuki.exe $OUT
+      - uses: actions/upload-artifact@v4
         with:
-          name: yuuki-windows
-          path: yuuki.exe
+          name: yuuki-windows-${{ matrix.arch }}
+          path: yuuki-*.exe
 
-  # 2. Build for Linux (x64)
+  # ==================== LINUX (x86, x64, ARMv7, ARM64) ====================
   build-linux:
+    name: Linux (${{ matrix.arch }})
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [x86, x64, armv7, arm64]
     steps:
       - uses: actions/checkout@v4
-      - name: Compile for Linux
+      - name: Install Cross Compilers
         run: |
-          g++ -std=c++17 -O3 -pthread src/*.cpp -o yuuki
-      - name: Upload Binary (Artifact)
-        uses: actions/upload-artifact@v4
+          sudo apt update
+          sudo apt install -y gcc-multilib g++-multilib \
+            g++-arm-linux-gnueabihf \
+            g++-aarch64-linux-gnu
+      - name: Compile (${{ matrix.arch }})
+        run: |
+          case "${{ matrix.arch }}" in
+            x86)   CROSS="" CFLAGS="-m32" OUT="yuuki-x86" ;;
+            x64)   CROSS="" CFLAGS="-m64" OUT="yuuki-x64" ;;
+            armv7) CROSS="arm-linux-gnueabihf-" OUT="yuuki-armv7" ;;
+            arm64) CROSS="aarch64-linux-gnu-" OUT="yuuki-arm64" ;;
+          esac
+          if [ "${{ matrix.arch }}" = "x86" ] || [ "${{ matrix.arch }}" = "x64" ]; then
+            make CXXFLAGS="-std=c++17 -O3 -pthread $CFLAGS"
+            mv yuuki $OUT
+          else
+            make CROSS_COMPILE=$CROSS
+            mv yuuki $OUT
+          fi
+      - uses: actions/upload-artifact@v4
         with:
-          name: yuuki-linux
-          path: yuuki
+          name: yuuki-linux-${{ matrix.arch }}
+          path: yuuki-*
 
-  # 3. Build for Android (arm64-v8a) using NDK
+  # ==================== MACOS (Intel + Apple Silicon) ====================
+  build-macos:
+    name: macOS (${{ matrix.arch }})
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        arch: [x64, arm64]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile (${{ matrix.arch }})
+        run: |
+          if [ "${{ matrix.arch }}" = "x64" ]; then
+            ARCH_FLAGS="-arch x86_64"
+            OUT="yuuki-macos-x64"
+          else
+            ARCH_FLAGS="-arch arm64"
+            OUT="yuuki-macos-arm64"
+          fi
+          g++ -std=c++17 -O3 -pthread src/*.cpp $ARCH_FLAGS -o $OUT
+      - uses: actions/upload-artifact@v4
+        with:
+          name: yuuki-macos-${{ matrix.arch }}
+          path: yuuki-macos-*
+
+  # ==================== ANDROID (ALL 4 ABIs) ====================
   build-android:
+    name: Android (${{ matrix.abi }})
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        abi: [arm64-v8a, armeabi-v7a, x86, x86_64]
     steps:
       - uses: actions/checkout@v4
       - name: Setup Android NDK
         run: |
-          wget https://dl.google.com/android/repository/android-ndk-r26c-linux.zip
-          unzip android-ndk-r26c-linux.zip
-          echo "ANDROID_NDK_ROOT=$PWD/android-ndk-r26c" >> $GITHUB_ENV
-      - name: Compile for Android (arm64)
+          wget -q https://dl.google.com/android/repository/android-ndk-r26c-linux.zip
+          unzip -q android-ndk-r26c-linux.zip
+          echo "NDK=$PWD/android-ndk-r26c" >> $GITHUB_ENV
+      - name: Compile (${{ matrix.abi }})
         run: |
-          export PATH=$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
-          $ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang++ -std=c++17 -O3 -static-libstdc++ -pthread src/*.cpp -o yuuki_android
-      - name: Upload Binary (Artifact)
-        uses: actions/upload-artifact@v4
+          case "${{ matrix.abi }}" in
+            arm64-v8a)   CLANG=aarch64-linux-android21-clang++; OUT=yuuki-android-arm64-v8a ;;
+            armeabi-v7a) CLANG=armv7a-linux-androideabi21-clang++; OUT=yuuki-android-armeabi-v7a ;;
+            x86)         CLANG=i686-linux-android21-clang++; OUT=yuuki-android-x86 ;;
+            x86_64)      CLANG=x86_64-linux-android21-clang++; OUT=yuuki-android-x86_64 ;;
+          esac
+          $NDK/toolchains/llvm/prebuilt/linux-x86_64/bin/$CLANG \
+            -std=c++17 -O3 -static-libstdc++ -pthread src/*.cpp -o $OUT
+      - uses: actions/upload-artifact@v4
         with:
-          name: yuuki-android
-          path: yuuki_android
+          name: yuuki-android-${{ matrix.abi }}
+          path: yuuki-android-*
 
-  # 4. Create the Official GitHub Release and attach all binaries
+  # ==================== CREATE RELEASE ====================
   create-release:
-    needs: [build-windows, build-linux, build-android]
+    needs: [build-windows, build-linux, build-macos, build-android]
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Required to create releases
+      contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Download all compiled binaries
+      - name: Download all binaries
         uses: actions/download-artifact@v4
         with:
           path: binaries
-      - name: Create Release and Upload Assets
+      - name: Organize binaries
+        run: |
+          mkdir release
+          cp binaries/yuuki-windows-x64/yuuki-x64.exe release/yuuki-win-x64.exe
+          cp binaries/yuuki-windows-x86/yuuki-x86.exe release/yuuki-win-x86.exe
+          cp binaries/yuuki-linux-x64/yuuki-x64 release/yuuki-linux-x64
+          cp binaries/yuuki-linux-x86/yuuki-x86 release/yuuki-linux-x86
+          cp binaries/yuuki-linux-arm64/yuuki-arm64 release/yuuki-linux-arm64
+          cp binaries/yuuki-linux-armv7/yuuki-armv7 release/yuuki-linux-armv7
+          cp binaries/yuuki-macos-x64/yuuki-macos-x64 release/yuuki-macos-x64
+          cp binaries/yuuki-macos-arm64/yuuki-macos-arm64 release/yuuki-macos-arm64
+          cp binaries/yuuki-android-arm64-v8a/yuuki-android-arm64-v8a release/yuuki-android-arm64-v8a
+          cp binaries/yuuki-android-armeabi-v7a/yuuki-android-armeabi-v7a release/yuuki-android-armeabi-v7a
+          cp binaries/yuuki-android-x86/yuuki-android-x86 release/yuuki-android-x86
+          cp binaries/yuuki-android-x86_64/yuuki-android-x86_64 release/yuuki-android-x86_64
+      - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            binaries/yuuki-windows/yuuki.exe
-            binaries/yuuki-linux/yuuki
-            binaries/yuuki-android/yuuki_android
+          files: release/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
