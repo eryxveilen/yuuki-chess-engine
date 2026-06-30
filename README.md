@@ -14,12 +14,10 @@ Yuuki is a UCI-compatible chess engine written in C++17. It features an advanced
 
 Get pre-compiled binaries for your platform:
 
-- **[Android (ARM64-v8a)](https://github.com/eryxveilen/yuuki-chess-engine/releases/download/v1.1/yuuki-android-arm64-v8a)** – For DroidFish on Android
-- **[Linux (x64)](https://github.com/eryxveilen/yuuki-chess-engine/releases/download/v1.1/yuuki-linux-x64)** – For Linux systems
-- **[macOS (x64)](https://github.com/eryxveilen/yuuki-chess-engine/releases/download/v1.1/yuuki-macos-x64)** – For macOS
-- **[Windows (x64)](https://github.com/eryxveilen/yuuki-chess-engine/releases/download/v1.1/yuuki-win-x64.exe)** – For Windows
-
-[View all releases](https://github.com/eryxveilen/yuuki-chess-engine/releases)
+- **[Android (ARM64-v8a)](https://github.com/eryxveilen/yuuki-chess-engine/releases)** – For DroidFish on Android
+- **[Linux (x64)](https://github.com/eryxveilen/yuuki-chess-engine/releases)** – For Linux systems
+- **[macOS (x64)](https://github.com/eryxveilen/yuuki-chess-engine/releases)** – For macOS
+- **[Windows (x64)](https://github.com/eryxveilen/yuuki-chess-engine/releases)** – For Windows
 
 ---
 
