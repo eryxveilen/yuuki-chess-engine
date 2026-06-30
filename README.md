@@ -34,7 +34,7 @@ Get pre-compiled binaries for your platform:
 
 Use [Yuuki App on Base44.com](https://yuuki-ch.base44.app) with preset personalities (Sniper, Super GM, Solid Defender, Pawn Master).
 
-> ⚠️The *known issues* are fixed thanks to [Anne](https://github.com/sarinaanneperez-dev)'s contribution.
+> ⚠️The *known issues* are fixed thanks to [Anne](https://github.com/sarinaanneperez-dev)'s indirect contribution.
 
 ---
 
