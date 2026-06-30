@@ -34,7 +34,7 @@ Get pre-compiled binaries for your platform:
 
 Use [Yuuki App on Base44.com](https://yuuki-ch.base44.app) with preset personalities (Sniper, Super GM, Solid Defender, Pawn Master).
 
-> ⚠️ **Known Issue:** The Base44 web app currently has a bug where pasted or uploaded PGN and FEN strings are not detected properly. This is a front-end issue and does not affect the UCI engine binary. A fix is being worked on.
+> ⚠️The *known issues* are fixed thanks to [Anne](github.com/sarinaanneperez-dev)'s contribution.
 
 ---
 
@@ -738,9 +738,8 @@ Middlegame:                     Endgame:
 
 ## 🙏 Credits
 
-- **Engine Developer**: Eryx
-- **Opening Book Format**: Polyglot-compatible
-- **Inspired By**: Stockfish, Ethereal, and open-source chess engine community
+- **Engine Developer**: [Eryx/RJ](https://facebook.com/profile.php?id=61590704998111)
+- **Contributor**: [Anne](github.com/sarinaanneperez-dev)
 
 ---
 
