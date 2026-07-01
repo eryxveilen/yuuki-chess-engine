@@ -740,7 +740,8 @@ Middlegame:                     Endgame:
 ## 🙏 Credits
 
 - **Engine Developer**: [Eryx/RJ](https://facebook.com/profile.php?id=61590704998111)
-- **Contributor**: [Anne](https://github.com/sarinaanneperez-dev)
+- **Web Interface & Testing**: [Anne](https://github.com/sarinaanneperez-dev) – Interface tweaks and deployment support via Base44 Builder+ plan.
+- **Testing Platform**: [Base44.app](https://base44.app) – Used for web deployment and engine testing.
 
 ---
 
